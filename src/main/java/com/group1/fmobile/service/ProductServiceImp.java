@@ -39,7 +39,7 @@ public class ProductServiceImp implements IProductService{
 
     @Override
     public Page<Product> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo-1,5);
+        Pageable pageable = PageRequest.of(pageNo-1,10);
         return this.productRepository.findAll(pageable);
     }
 
@@ -51,7 +51,7 @@ public class ProductServiceImp implements IProductService{
     @Override
     public Page<Product> searchAndPaginationProduct(String keyword, Integer pageNo) {
         List list = this.searchProducts(keyword);
-        Pageable pageable = PageRequest.of(pageNo-1,5);
+        Pageable pageable = PageRequest.of(pageNo-1,10);
         Integer start = (int) pageable.getOffset();
         Integer end =(int) ((pageable.getOffset() + pageable.getPageSize()) > list.size() ? list.size() :  pageable.getOffset() + pageable.getPageSize());
         list = list.subList(start,end);

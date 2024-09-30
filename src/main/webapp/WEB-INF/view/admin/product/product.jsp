@@ -268,16 +268,19 @@
                             <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
                                 <a class="page-link" href="?pageNo=${currentPage - 1}&keyword=${keyword}">Previous</a>
                             </li>
-                            <c:forEach var="i" begin="1" end="${totalPage}">
+
+                            <c:forEach var="i" begin="${currentPage - 5 > 0 ? currentPage - 5 : 1}" end="${currentPage + 4 < totalPage ? currentPage + 4 : totalPage}">
                                 <li class="page-item ${currentPage == i ? 'active' : ''}">
                                     <a class="page-link" href="?pageNo=${i}&keyword=${keyword}">${i}</a>
                                 </li>
                             </c:forEach>
+
                             <li class="page-item ${currentPage == totalPage ? 'disabled' : ''}">
                                 <a class="page-link" href="?pageNo=${currentPage + 1}&keyword=${keyword}">Next</a>
                             </li>
                         </ul>
                     </nav>
+
                 </div>
             </div>
         </div>
