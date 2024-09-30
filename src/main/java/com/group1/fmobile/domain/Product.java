@@ -68,7 +68,7 @@ public class Product implements Serializable {
 
     @NotBlank
     @Size(min = 1, max = 255)
-    @Pattern(regexp = "^[a-zA-Z]*$")
+    @Pattern(regexp = "^[a-zA-Z ]*$")
     @Column(name = "color")
     String color;
 

@@ -31,7 +31,7 @@ public class Brand implements Serializable {
 
     @NotBlank
     @Size(min = 1, max = 255)
-    @Pattern(regexp = "^[a-zA-Z0-9]*$")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]*$")
     @Column(name = "brand_name", nullable = false)
     String brandName;
 

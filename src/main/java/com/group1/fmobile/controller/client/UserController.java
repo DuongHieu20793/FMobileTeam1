@@ -1,12 +1,10 @@
 package com.group1.fmobile.controller.client;
 
 import com.group1.fmobile.domain.Orders;
-import com.group1.fmobile.domain.UpdateProfileRequest;
 import com.group1.fmobile.domain.User;
 import com.group1.fmobile.service.OrderService;
 import com.group1.fmobile.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,7 +61,7 @@ public class UserController {
                 model.addAttribute("orders", orders);
                 return "client/homepage/userpage";  // tên của file JSP hiển thị lịch sử đơn hàng
             } else {
-                return "error"; // hoặc trả về trang lỗi nếu không tìm thấy user
+                return "admin/error"; // hoặc trả về trang lỗi nếu không tìm thấy user
             }
         }
 
@@ -75,7 +73,7 @@ public class UserController {
             model.addAttribute("user", user);
             return "client/homepage/profile";
         } else {
-            return "error";
+            return "admin/error";
         }
     }
 

@@ -36,6 +36,7 @@ public class BrandController {
     @PostMapping("/brand/saveOrUpdate")
     public String saveOrUpdateBrand(@ModelAttribute("brand") @Valid Brand brand,
                                     BindingResult bindingResult) {
+
         // Kiểm tra xem tên thương hiệu đã tồn tại chưa
         Brand existingBrand = brandRepository.findByBrandName(brand.getBrandName());
 

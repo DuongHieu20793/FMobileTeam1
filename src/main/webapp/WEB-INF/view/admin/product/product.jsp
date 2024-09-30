@@ -122,7 +122,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="product_price">Product Price</label>
-                            <input class="form-control" type="number" id="product_price" name="price" step="1" value="${product.price}" />
+                            <input class="form-control" type="number" id="product_price" name="price" step="0.01" value="${product.price}" />
                             <div class="error-message" id="priceError" style="color: red; display: none;"></div>
                             <p style="color: red"><form:errors path="price"></form:errors></p>
                         </div>
