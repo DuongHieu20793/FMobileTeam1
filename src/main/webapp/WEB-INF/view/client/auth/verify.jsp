@@ -159,16 +159,23 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <script>
         function resendOTP() {
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
-                type: "POST",
-                url: "/resend-otp",
+                url: '/resend-otp',
+                type: 'POST',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
                 success: function(response) {
                     alert(response);
                 },
-                error: function() {
-                    alert("Có lỗi xảy ra khi gửi lại mã OTP. Vui lòng thử lại sau.");
+                error: function(xhr, status, error) {
+                    alert('Failed to resend OTP. Please try again.');
                 }
             });
         }

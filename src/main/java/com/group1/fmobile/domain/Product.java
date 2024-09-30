@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -50,21 +51,18 @@ public class Product implements Serializable {
     @Column(name = "product_name", nullable = false)
     String productName;
 
-    @NotNull
-    @Min(value = 1)
-    @Max(value = 999999)
+
+    @Range(min = 1, max = 10000000)
     @Column(name = "price", nullable = false)
     double price;
 
-    @NotNull
-    @Min(value = 1)
-    @Max(value = Integer.MAX_VALUE )
+
+    @Range(min = 1, max = 10000000)
     @Column(name = "quantity", nullable = false)
     int quantity;
 
-    @NotNull
-    @Min(value = 1)
-    @Max(value = Integer.MAX_VALUE )
+
+    @Range(min = 0, max = 10000000)
     @Column(name = "sold")
     int sold;
 

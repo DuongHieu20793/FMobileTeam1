@@ -32,25 +32,26 @@ public class BrandController {
         model.addAttribute("brand", new Brand());  // Tạo đối tượng trống cho thêm mới
         return "admin/brand/brand";  // Luôn hiển thị form thêm mới mặc định
     }
-
     // Xử lý thêm mới hoặc cập nhật thương hiệu
     @PostMapping("/brand/saveOrUpdate")
     public String saveOrUpdateBrand(@ModelAttribute("brand") @Valid Brand brand,
                                     BindingResult bindingResult) {
-    // Kiểm tra xem tên thương hiệu đã tồn tại chưa
-        if (brandRepository.findByBrandName(brand.getBrandName()) != null) {
-            bindingResult.rejectValue("brandName", "error.brandName", "Brand name already exists!");
+        // Kiểm tra xem tên thương hiệu đã tồn tại chưa
+        Brand existingBrand = brandRepository.findByBrandName(brand.getBrandName());
+
+        // Nếu tên thương hiệu đã tồn tại và không phải là thương hiệu đang được chỉnh sửa
+        if (existingBrand != null && !existingBrand.getId().equals(brand.getId())) {
+            bindingResult.rejectValue("brandName", "error.brandName",
+                    "Brand name already exists!");
         }
 
         // Kiểm tra lỗi từ Validation
         if (bindingResult.hasErrors()) {
             return "admin/brand/brand";  // Trả về trang form nếu có lỗi
         }
-
         brandService.saveOrUpdate(brand);  // Lưu thương hiệu (thêm mới hoặc cập nhật)
         return "redirect:/admin/brand";  // Quay lại trang quản lý sau khi lưu
     }
-
     // Chỉnh sửa thương hiệu (lấy thông tin để đưa lên form)
     @GetMapping("/brand/edit/{id}")
     public String editBrand(@PathVariable("id") Long id, Model model) {
@@ -61,7 +62,6 @@ public class BrandController {
         model.addAttribute("brands", list);  // Hiển thị lại danh sách thương hiệu
         return "admin/brand/brand";  // Hiển thị form với thông tin cập nhật
     }
-
     // Xóa thương hiệu
     @GetMapping("/brand/delete/{id}")
     public String deleteBrand(@PathVariable("id") Long id) {

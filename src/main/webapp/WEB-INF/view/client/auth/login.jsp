@@ -227,16 +227,6 @@
         });
 
 
-    $("form").on("submit", function(e) {
-        if (!$("#remember-me").is(":checked")) {
-            $("input[name='remember-me']").prop("disabled", true);
-        }});
-    });
-
-    /**
-     * Nguyen Ngoc Quy Su kien login va register form
-     * */
-
     <%--document.addEventListener('DOMContentLoaded', function() { // Lang nghe su kien trinh duyet duoc tai--%>
     <%--    const loginForm = document.getElementById('loginform'); // tim kiem id va luu tru vao bien loginForm--%>
     <%--    loginForm.addEventListener('submit', function(event) { // nghe su kien submit tren loginForm va kich hoat--%>

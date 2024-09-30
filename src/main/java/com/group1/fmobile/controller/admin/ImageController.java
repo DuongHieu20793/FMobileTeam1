@@ -2,6 +2,7 @@ package com.group1.fmobile.controller.admin;
 
 import com.group1.fmobile.domain.Image;
 import com.group1.fmobile.domain.Product;
+import com.group1.fmobile.repository.ImageRepository;
 import com.group1.fmobile.service.IProductService;
 import com.group1.fmobile.service.ImageService;
 import com.group1.fmobile.service.ProductService;
@@ -31,6 +32,8 @@ public class ImageController {
 
     @Autowired
     private IProductService productService;
+    @Autowired
+    private ImageRepository imageRepository;
 
     // Đường dẫn lưu trữ hình ảnh trên server
     private static String UPLOAD_DIR = "src/main/webapp/resources/images/product/";
@@ -65,18 +68,17 @@ public class ImageController {
             model.addAttribute("image", image);
             return "admin/image/image";  // Trả về trang hiển thị form với lỗi
         }
-
         // Kiểm tra xem file có được tải lên hay không
         if (imageData == null || imageData.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng chọn hình ảnh!");
             return "redirect:/admin/image";
         }
-
         try {
             // Kiểm tra định dạng file (chỉ chấp nhận PNG và JPEG)
             String contentType = imageData.getContentType();
             if (!contentType.equals("image/png") && !contentType.equals("image/jpeg")) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Chỉ chấp nhận định dạng PNG hoặc JPEG!");
+                redirectAttributes.addFlashAttribute("errorMessage",
+                        "Chỉ chấp nhận định dạng PNG hoặc JPEG!");
                 return "redirect:/admin/image";
             }
 
@@ -90,12 +92,9 @@ public class ImageController {
 
             // Lưu đối tượng Image vào cơ sở dữ liệu
             imageService.saveOrUpdate(image);
-            redirectAttributes.addFlashAttribute("successMessage", "Hình ảnh đã được lưu thành công!");
-
-
         } catch (IOException e) {
             // Xử lý lỗi khi lưu hình ảnh
-            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi trong quá trình lưu hình ảnh: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error saving image: " + e.getMessage());
             return "redirect:/admin/image";
         }
         return "redirect:/admin/image";  // Quay lại trang quản lý sau khi lưu
@@ -118,11 +117,9 @@ public class ImageController {
     public String deleteImage(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
             imageService.delete(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Hình ảnh đã được xóa thành công!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi xóa hình ảnh: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error delete image: " + e.getMessage());
         }
-
         return "redirect:/admin/image";  // Quay lại trang quản lý sau khi xóa
     }
 

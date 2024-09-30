@@ -12,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,6 +37,6 @@ public class ProductCategory implements Serializable {
     String categoryName;
 
     // LK Product
-    @OneToMany(mappedBy = "productCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    Set<Product> products = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "productCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    List<Product> products;
 }

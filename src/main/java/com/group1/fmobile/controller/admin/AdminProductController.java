@@ -32,7 +32,7 @@ public class AdminProductController {
     private CategoryService categoryService;
     @Autowired
     private ProductRepository productRepository;
-    // Hiển thị danh sách san pham và form thêm mới
+    // Show List Product
     @RequestMapping("/product")
     public String listProduct(Model model, @Param("keyword") String keyword,
                                             @RequestParam(name = "pageNo",
@@ -53,19 +53,21 @@ public class AdminProductController {
         model.addAttribute("product", new Product());  // Tạo đối tượng trống cho thêm mới
         return "admin/product/product";  // Luôn hiển thị form thêm mới mặc định
     }
-    // Xử lý thêm mới hoặc cập nhật san pham
+    // Add or Update
     @PostMapping("/product/saveOrUpdate")
     public String saveOrUpdateProduct(@ModelAttribute("product") @Valid Product product,
-                                      BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+                                      BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                      Model model) {
         // Lấy danh sách thương hiệu và danh mục để truyền lại nếu có lỗi
         List<Brand> brands = brandService.getAll();
         List<ProductCategory> categories = categoryService.getAll();
 
         // Kiểm tra xem tên sản phẩm đã tồn tại chưa
-        if (productRepository.findByProductName(product.getProductName()) != null) {
-            bindingResult.rejectValue("productName", "error.productName", "Product name already exists!");
+        Product existingProduct = productRepository.findByProductName(product.getProductName());
+        if (existingProduct != null && !existingProduct.getId().equals(product.getId())) {
+            bindingResult.rejectValue("productName", "error.productName",
+                    "Product name already exists!");
         }
-
         if (bindingResult.hasErrors()) {
             // Truyền lại thông tin nếu form không hợp lệ
             model.addAttribute("brands", brands);
@@ -73,16 +75,10 @@ public class AdminProductController {
             model.addAttribute("product", product);  // Truyền lại sản phẩm với thông tin đã nhập
             return "admin/product/product";  // Quay lại trang nếu có lỗi
         }
-
         productService.saveOrUpdate(product);  // Lưu sản phẩm (thêm mới hoặc cập nhật)
-
-        // Truyền thông điệp thành công bằng flash attribute
-        redirectAttributes.addFlashAttribute("successMessage", "Product saved successfully!");
-
         return "redirect:/admin/product";  // Quay lại trang quản lý sau khi lưu
     }
-
-    // Chỉnh sửa thương hiệu (lấy thông tin để đưa lên form)
+    // Edit
     @GetMapping("/product/edit/{id}")
     public String editProduct(@PathVariable("id") Long id, Model model) {
         Product product = productService.getById(id);
@@ -95,7 +91,7 @@ public class AdminProductController {
         model.addAttribute("categories", categories);  // Truyền danh sách danh mục
         return "admin/product/product";  // Hiển thị form với thông tin cập nhật
     }
-    // Xóa san pham
+    // Delete
     @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id ) {
         productService.delete(id);
