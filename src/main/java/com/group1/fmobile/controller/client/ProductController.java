@@ -151,7 +151,7 @@ public class ProductController {
     @GetMapping("/search")
     public String search(@RequestParam("name") String name, //"searchName" trùng trong header.jsp
                          @RequestParam(value = "page", defaultValue = "1") int page,
-                         @RequestParam(value = "size", defaultValue = "6") int pageSize,
+                         @RequestParam(value = "size", defaultValue = "16") int pageSize,
                          Model model) {
         System.out.println(">>> run here");
         Page<Product> products = productService.search(name, page, pageSize);
