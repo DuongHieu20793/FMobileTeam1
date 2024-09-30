@@ -11,27 +11,27 @@ public class ExceptionController {
     @ExceptionHandler(NullPointerException.class)
     public String nullPointer(Exception e){
         e.printStackTrace();
-        return "admin/error";
+        return "error";
     }
     @ExceptionHandler(IllegalArgumentException.class)
     public String IllegalArgument(Exception e){
         e.printStackTrace();
-        return "admin/error";
+        return "error";
     }
     @ExceptionHandler(FileNotFoundException.class)
     public String FileNotFound(Exception e){
         e.printStackTrace();
-        return "admin/error";
+        return "error";
     }
     @ExceptionHandler(InvalidDataAccessApiUsageException.class)
     public String InvalidDataAccessApiUsageException(Exception e){
         e.printStackTrace();
-        return "admin/error";
+        return "error";
     }
     @ExceptionHandler(Exception.class)
     public String Exception(Exception e){
         e.printStackTrace();
-        return "admin/error";
+        return "error";
     }
 
 }

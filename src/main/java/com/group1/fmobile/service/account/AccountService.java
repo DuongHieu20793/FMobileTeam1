@@ -107,6 +107,7 @@ public class AccountService {
     /**
      * Gửi lại mã OTP xác thực cho người dùng.
      */
+    @Async
     public void resendOTP(String email) {
         try {
             User user = userService.findByEmail(email);

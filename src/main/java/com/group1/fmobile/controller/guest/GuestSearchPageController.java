@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/guest")
 public class GuestSearchPageController {
     @Autowired
-    public GuestSearchPageController(ProductServices productServices){
+    public GuestSearchPageController(ProductServices productServices) {
         this.productServices = productServices;
     }
 
@@ -22,35 +22,44 @@ public class GuestSearchPageController {
 
     @GetMapping("/search")
     public String search(@RequestParam("query") String query,
-                         @RequestParam(defaultValue  = "0") int page,
+                         @RequestParam(defaultValue = "0") int page,
                          Model model) {
-    int size = 16;
+
+        int size = 16;
         if (query == null || query.trim().isEmpty()) {
             return "guest/errorpage/noDataFound";
         }
         String category = query.toLowerCase();
         Page<Product> productPage;
+        long totalProducts = 0L;
         switch (category) {
             case "mobile":
             case "laptop":
             case "tablet":
             case "accessories":
                 productPage = productServices.findByCategory(category, page, size);
-                model.addAttribute("products", productPage.getContent());
-                model.addAttribute("currentPage", productPage.getNumber());
-                model.addAttribute("totalPages", productPage.getTotalPages());
-                return "guest/searchpage/" + category;
+                totalProducts = productPage.getTotalElements();
+                if (totalProducts != 0) {
+                    model.addAttribute("products", productPage.getContent());
+                    model.addAttribute("currentPage", productPage.getNumber());
+                    model.addAttribute("totalPages", productPage.getTotalPages());
+                    model.addAttribute("results", totalProducts);
+                    return "guest/searchpage/" + category;
+                }
             default:
                 break;
         }
-
-        List<Product> results = productServices.searchByQuery(query.trim());
-
-        if (results.isEmpty()) {
+        productPage = productServices.searchByQuery(query.trim(), page, 15);
+        totalProducts = productPage.getTotalElements();
+        if (totalProducts != 0) {
+            model.addAttribute("products", productPage.getContent());
+            model.addAttribute("currentPage", productPage.getNumber());
+            model.addAttribute("totalPages", productPage.getTotalPages());
+            model.addAttribute("results", totalProducts);
+            return "guest/searchpage/allProducts";
+        } else {
             return "guest/errorpage/noDataFound";
         }
-        model.addAttribute("products", results);
-        return "guest/searchpage/allProducts";
 
     }
 

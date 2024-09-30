@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -20,7 +21,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Orders {
+public class Orders implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id", nullable = false)
@@ -32,8 +36,8 @@ public class Orders {
     User user;
 
     //LK Discount
-    @OneToOne
-    @JoinColumn(name = "discount_id", referencedColumnName = "discount_id")
+    @ManyToOne
+    @JoinColumn(name = "discount_id")
     Discount discount;
 
     String phone;

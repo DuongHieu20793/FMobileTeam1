@@ -118,6 +118,7 @@
                                 </option>
                             </c:forEach>
                         </select>
+                        <div class="error-message" id="productError" style="color: red; display: none;"></div> <!-- Thông báo lỗi cho product -->
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
@@ -130,6 +131,7 @@
                     <div class="col-md-3 form-group">
                         <label for="image_url">Choose Image:</label>
                         <input type="file" class="form-control" id="image_url" name="image_url" required />
+                        <div class="error-message" id="imageUrlError" style="color: red; display: none;"></div> <!-- Thông báo lỗi cho image_url -->
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary" id="submit-button">
@@ -267,25 +269,32 @@
 
 <script>
     document.getElementById("submit-button").onclick = function(event) {
-        // Lấy giá trị của imageName
+        // Lấy giá trị của imageName, product và image_url
         var imageName = document.getElementById("image_name").value.trim();
+        var product = document.getElementById("product").value;
+        var imageUrl = document.getElementById("image_url").value;
 
         // Reset thông báo lỗi
-        var errorMessageElement = document.getElementById("imageNameError");
-        errorMessageElement.style.display = "none"; // Ẩn thông báo lỗi ban đầu
+        var imageNameErrorElement = document.getElementById("imageNameError");
+        var productErrorElement = document.getElementById("productError");
+        var imageUrlErrorElement = document.getElementById("imageUrlError");
+
+        imageNameErrorElement.style.display = "none"; // Ẩn thông báo lỗi ban đầu
+        productErrorElement.style.display = "none";  // Ẩn thông báo lỗi ban đầu
+        imageUrlErrorElement.style.display = "none"; // Ẩn thông báo lỗi ban đầu
 
         // Kiểm tra nếu imageName rỗng hoặc chỉ chứa khoảng trắng
         if (!imageName) {
-            errorMessageElement.innerText = "Image Name cannot be empty!";
-            errorMessageElement.style.display = "block"; // Hiện thông báo lỗi
+            imageNameErrorElement.innerText = "Image Name cannot be empty!";
+            imageNameErrorElement.style.display = "block"; // Hiện thông báo lỗi
             event.preventDefault(); // Ngăn chặn gửi biểu mẫu
             return;
         }
 
         // Kiểm tra độ dài của imageName
         if (imageName.length > 255) {
-            errorMessageElement.innerText = "Image Name cannot exceed 255 characters!";
-            errorMessageElement.style.display = "block"; // Hiện thông báo lỗi
+            imageNameErrorElement.innerText = "Image Name cannot exceed 255 characters!";
+            imageNameErrorElement.style.display = "block"; // Hiện thông báo lỗi
             event.preventDefault(); // Ngăn chặn gửi biểu mẫu
             return;
         }
@@ -293,8 +302,24 @@
         // Kiểm tra ký tự đặc biệt trong imageName
         var regex = /^[a-zA-Z0-9\s]+$/; // Chỉ cho phép chữ cái, số và khoảng trắng
         if (!regex.test(imageName)) {
-            errorMessageElement.innerText = "Image Name can only contain letters, numbers, and spaces!";
-            errorMessageElement.style.display = "block"; // Hiện thông báo lỗi
+            imageNameErrorElement.innerText = "Image Name can only contain letters, numbers, and spaces!";
+            imageNameErrorElement.style.display = "block"; // Hiện thông báo lỗi
+            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
+            return;
+        }
+
+        // Kiểm tra nếu product chưa được chọn
+        if (!product) {
+            productErrorElement.innerText = "Product is required!";
+            productErrorElement.style.display = "block"; // Hiện thông báo lỗi
+            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
+            return;
+        }
+
+        // Kiểm tra nếu ảnh chưa được chọn
+        if (!imageUrl) {
+            imageUrlErrorElement.innerText = "Image is required!";
+            imageUrlErrorElement.style.display = "block"; // Hiện thông báo lỗi
             event.preventDefault(); // Ngăn chặn gửi biểu mẫu
             return;
         }

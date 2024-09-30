@@ -24,7 +24,7 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container-fluid">
+    <div id = "container-fluid" class="container-fluid">
         <a href="/">
             <img class="logo-nav" src="/images/product/FMobileLogo.png" alt="" />
         </a>
@@ -63,7 +63,7 @@
                     <a class="nav-link menu" href="guest/search?query=accessories">Accessories</a>
                 </li>
                 <form id="searchForm" class="d-flex ml-5" action="${pageContext.request.contextPath}/guest/search" method="GET">
-                    <div class="search-icon" style="width: 330px">
+                    <div class="search-icon">
                         <input class="form-control search_nav" type="search" name = "query" placeholder="Search" aria-label="Search"/>
                         <svg id="searchIcon" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
