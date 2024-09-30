@@ -71,7 +71,7 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse ml-5" id="navbarNav" style="width: 850px">
+        <div class="collapse navbar-collapse ml-5" id="navbarNav" style="width: 850px; height: 75px;">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -113,17 +113,16 @@
                     </svg>
                     <a class="nav-link menu" href="#">Accessories</a>
                 </li>
-                <form class="d-flex ml-5 mb-2">
+                <form id="searchForm" class="d-flex ml-5" action="${pageContext.request.contextPath}/client/search" method="GET">
                     <div class="search-icon" style="width: 330px">
-                        <input class="form-control search_nav" style="height: 40px; padding-top: 10px;margin-top: 20px" type="search" placeholder="Search"
+                        <input class="form-control search_nav" style="height: 40px; padding-top: 10px;" type="search" name="name" placeholder="Search"
                                aria-label="Search"
                                style="font-size: 1.5rem;
                                         height: 40px;
                                         padding-top: 5px;
                                         border-radius: 5px;
                                         "/>
-                        <svg style="right: 105px;
-                                    top: 60%;" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                        <svg style="right: 105px;" id="searchIcon" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                              viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
@@ -140,12 +139,12 @@
             </svg>
             <span>0</span>
         </div>
-        <div class="navbar-nav" style="margin-left: 15px">
+        <div class="navbar-nav" style="margin-left: 45px">
             <security:authorize access="isAuthenticated()">
                 <a href="/client/homepage/userpage" class="me-2">
                     <img class="logo-nav rounded-circle" style="width: 40px; height: 40px; object-fit: cover; background: #007bff;" src="/client/img/avatar.jpg" alt="user" />
                 </a>
-                <div class="mt-3" style="font-size: 1.5rem; width: 150px">
+                <div class="mt-3" style="font-size: 1.5rem; width: 100px">
                     <security:authentication var="userEmail" property="principal.username" />
                     <c:set var="username" value="${fn:substringBefore(userEmail, '@')}" />
                         ${fullName}

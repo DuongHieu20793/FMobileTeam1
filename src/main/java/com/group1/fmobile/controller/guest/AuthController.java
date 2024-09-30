@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 
-public class HomePageController {
+public class AuthController {
     private final AccountService accountService;
 
     @Autowired
-    public HomePageController(AccountService accountService) {
+    public AuthController(AccountService accountService) {
         this.accountService = accountService;
     }
 
