@@ -42,53 +42,11 @@
 <body>
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3">
-        <nav class="navbar bg-light navbar-light">
-            <a href="/admin/home" class="navbar-brand mx-4 mb-3">
-                <h3 class="text-primary">ADMIN</h3>
-            </a>
-            <div class="d-flex align-items-center ms-4 mb-4">
-                <div class="position-relative">
-                    <div
-                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
-                    </div>
-                </div>
-                <div class="ms-3">
-                    <h6 class="mb-0">Fmobile</h6>
-                    <span>Admin</span>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <!-- Sidebar End -->
+
 
     <!-- Content Start -->
     <div class="content">
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-            </a>
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <div class="navbar-nav align-items-center ms-auto">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <span class="d-none d-lg-inline-flex">Fmobile</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">My Profile</a>
-                        <a href="#" class="dropdown-item">Settings</a>
-                        <form method="post" action="/logout">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <button class="dropdown-item">Logout</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <!-- Navbar End -->
+
         <!-- 404 Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
@@ -98,7 +56,7 @@
                     <h3 class="mb-4">We’re sorry!</h3>
                     <p class="mb-4">The page you have looked for does not exist in our website!
                         Maybe go to our home page or try to use a search?</p>
-                    <a class="btn btn-primary rounded-pill py-3 px-5" href="/admin/home">Go Back To Home</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-5" href="/">Go Back To Home</a>
                 </div>
             </div>
         </div>
