@@ -31,7 +31,7 @@ public class Image {
 
     @NotBlank
     @Size(min = 1, max = 255)
-    @Pattern(regexp = "^[a-zA-Z0]*$")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]*$")
     @Column(name = "image_name")
     String image_name;
 

@@ -32,26 +32,26 @@ public class CategoryController {
         model.addAttribute("category", new ProductCategory());
         return "admin/category/category";
     }
-
     // Xử lý thêm mới hoặc cập nhật danh mục
     @PostMapping("/category/saveOrUpdate")
     public String saveOrUpdateCategory(@ModelAttribute("category") @Valid ProductCategory category,
                                        BindingResult bindingResult, Model model) {
         // Kiểm tra xem tên danh mục đã tồn tại chưa
-        if (categoryRepository.findByCategoryName(category.getCategoryName()) != null) {
-            bindingResult.rejectValue("categoryName", "error.categoryName", "Category name already exists!");
-        }
+        ProductCategory existingCategory = categoryRepository.findByCategoryName(category.getCategoryName());
 
+        // Nếu tên danh mục đã tồn tại và không phải là danh mục đang được chỉnh sửa
+        if (existingCategory != null && !existingCategory.getId().equals(category.getId())) {
+            bindingResult.rejectValue("categoryName", "error.categoryName",
+                    "Category name already exists!");
+        }
         // Kiểm tra lỗi từ Validation
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryService.getAll()); // Cập nhật lại danh sách danh mục
             return "admin/category/category";  // Trả về trang form nếu có lỗi
         }
-
         categoryService.saveOrUpdate(category); // Lưu danh mục (thêm mới hoặc cập nhật)
         return "redirect:/admin/category"; // Quay lại trang quản lý sau khi lưu
     }
-
     // Chỉnh sửa danh mục (lấy thông tin để đưa lên form)
     @GetMapping("/category/edit/{id}")
     public String editCategory(@PathVariable("id") Long id, Model model) {
