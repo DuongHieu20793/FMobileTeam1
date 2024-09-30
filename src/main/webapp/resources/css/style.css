@@ -414,6 +414,10 @@ header {
     font-size: 12px;
 }
 
+.filter-container label{
+    font-size: 1.5rem;
+}
+
 .addCart:hover {
     background-color: #e0a800 !important;
     /* Màu hơi tối hơn khi hover */

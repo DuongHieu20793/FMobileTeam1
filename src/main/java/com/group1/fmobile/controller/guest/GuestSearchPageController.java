@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/guest")
 public class GuestSearchPageController {
     @Autowired
-    public GuestSearchPageController(ProductServices productServices){
+    public GuestSearchPageController(ProductServices productServices) {
         this.productServices = productServices;
     }
 
@@ -22,9 +22,10 @@ public class GuestSearchPageController {
 
     @GetMapping("/search")
     public String search(@RequestParam("query") String query,
-                         @RequestParam(defaultValue  = "0") int page,
+                         @RequestParam(defaultValue = "0") int page,
                          Model model) {
-    int size = 16;
+
+        int size = 16;
         if (query == null || query.trim().isEmpty()) {
             return "guest/errorpage/noDataFound";
         }
@@ -38,7 +39,7 @@ public class GuestSearchPageController {
             case "accessories":
                 productPage = productServices.findByCategory(category, page, size);
                 totalProducts = productPage.getTotalElements();
-                if(totalProducts != 0){
+                if (totalProducts != 0) {
                     model.addAttribute("products", productPage.getContent());
                     model.addAttribute("currentPage", productPage.getNumber());
                     model.addAttribute("totalPages", productPage.getTotalPages());
@@ -50,13 +51,13 @@ public class GuestSearchPageController {
         }
         productPage = productServices.searchByQuery(query.trim(), page, 15);
         totalProducts = productPage.getTotalElements();
-        if(totalProducts!=0){
+        if (totalProducts != 0) {
             model.addAttribute("products", productPage.getContent());
             model.addAttribute("currentPage", productPage.getNumber());
             model.addAttribute("totalPages", productPage.getTotalPages());
             model.addAttribute("results", totalProducts);
             return "guest/searchpage/allProducts";
-        }else{
+        } else {
             return "guest/errorpage/noDataFound";
         }
 
