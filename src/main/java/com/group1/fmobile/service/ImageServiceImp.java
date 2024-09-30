@@ -56,7 +56,7 @@ public class ImageServiceImp implements ImageService{
 
     @Override
     public Page<Image> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo-1,5);
+        Pageable pageable = PageRequest.of(pageNo-1,10);
         return this.imageRepository.findAll(pageable);
     }
 
@@ -64,7 +64,7 @@ public class ImageServiceImp implements ImageService{
     public Page<Image> searchAndPaginationImage(String keyword, Integer pageNo) {
         // lay list toan bo imgae
         List list = this.searchImages(keyword);
-        Pageable pageable = PageRequest.of(pageNo-1,5);
+        Pageable pageable = PageRequest.of(pageNo-1,10);
         Integer start = (int) pageable.getOffset();
         Integer end = (int) ((pageable.getOffset() + pageable.getPageSize()) > list.size() ? list.size() :  pageable.getOffset() + pageable.getPageSize());
         list = list.subList(start,end);
