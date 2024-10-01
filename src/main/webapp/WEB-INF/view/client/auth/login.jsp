@@ -288,11 +288,9 @@
 <head>
     <meta charset="utf-8">
     <title>Login | FMOBILE</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -314,7 +312,7 @@
             width: 400px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
-            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
         }
 
         .wrapper .title {
@@ -375,6 +373,7 @@
             padding: 0 5px;
         }
 
+
         form .content {
             display: flex;
             width: 100%;
@@ -421,50 +420,7 @@
         form .signup-link {
             color: #262626;
             margin-top: 20px;
-            Not a member ? < a href = "/register" > Register now < / a > < / div > < / form > < / div > < script > $(document) . ready(function() {
-            $("form") . validate( {
-            rules: {
-            username: {
-            required: true,
-            email: true
-
-        },
-        password: {
-            required: true,
-            minlength: 6
-
-        }
-        },
-        messages: {
-            username: {
-            required: "Please enter your email",
-            email: "Please enter a valid email address"
-
-        },
-        password: {
-            required: "Please enter your password",
-            minlength: "Password must be at least 6 characters long"
-
-        }
-        },
-        errorElement: "div",
-        errorPlacement: function(error, element) {
-            error.
-
-        addClass("error");
-
-            error.
-
-        insertAfter(element);
-        }
-        });
-            $("form") . on("submit", function(e) {
-            if (! $("#remember-me") . is(":checked")) {
-            $("input[name='remember-me']") . prop("disabled", true);
-        }
-        });
-        });
-        < / script > < / body > < / html > text-align: center;
+            text-align: center;
         }
 
         form .pass-link a,
@@ -482,50 +438,45 @@
             color: red;
             font-size: 14px;
         }
+
     </style>
 </head>
 <body>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
 <div class="wrapper">
     <div class="title">
         Login
     </div>
+
+
     <%--@elvariable id="login" type="com.group1.fmobile.domain.dto.LoginDTO"--%>
-
-    <form id="loginform" action="/login" method="post">
+    <form id="loginform" action="/login" method="post" >
         <c:if test="${param.error != null}">
-
-        <div class="my-2" style="color: red;">Invalid email or password.
-        </div>
+            <div class="my-2" style="color: red;">Invalid email or password.
+            </div>
         </c:if>
-
 
         <div class="mb-5 field">
             <input class="form-control" type="email" placeholder="" required
-
-                   name="username"/>
+                   name="username" />
             <label>Email address</label>
-            <form:errors path="email" cssClass="error"/>
-
+            <form:errors path="email" cssClass="error" />
         </div>
         <div class="mb-5 field">
             <input class="form-control" type="password"
-
-                   placeholder="" required name="password"/>
+                   placeholder="" required name="password" />
             <label>Password</label>
-            <form:errors path="password" cssClass="error"/>
-
+            <form:errors path="password" cssClass="error" />
         </div>
         <div>
             <input type="hidden" name="${_csrf.parameterName}"
+                   value="${_csrf.token}" />
 
-                   value="${_csrf.token}"/>
         </div>
         <div class="content">
             <div class="checkbox">
@@ -540,3 +491,41 @@
             <input type="submit" value="Login">
         </div>
         <div class="signup-link">
+            Not a member? <a href="/register">Register now</a>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        $("form").validate({
+            rules: {
+                username: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                }
+            },
+            messages: {
+                username: {
+                    required: "Please enter your email",
+                    email: "Please enter a valid email address"
+                },
+                password: {
+                    required: "Please enter your password",
+                    minlength: "Password must be at least 6 characters long"
+                }
+            },
+            errorElement: "div",
+            errorPlacement: function(error, element) {
+                error.addClass("error");
+                error.insertAfter(element);
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
