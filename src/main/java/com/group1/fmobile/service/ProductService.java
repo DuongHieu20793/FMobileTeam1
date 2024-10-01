@@ -60,9 +60,17 @@ public class ProductService {
 //        List<Product> products = query.getResultList();
 //        return products;
 //    }
-    public Page<Product> search(String name, int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
-        return productRepository.searchProducts(name, pageable);
+    public Page<Product> search(String name, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+
+        // Tách các từ khóa
+        String[] keywords = name.trim().split("\\s+");
+
+        // Ghép lại các từ khóa thành một chuỗi để tìm kiếm a%b
+        String searchPattern = String.join("%", keywords);
+        System.out.println("search pattern: "+searchPattern);
+
+        return productRepository.searchProducts(searchPattern.toLowerCase(), pageable);
     }
     // Phân trang
     public long countSearchResults(String name) {

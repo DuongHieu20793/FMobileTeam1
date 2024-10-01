@@ -39,7 +39,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByCategoryName(@Param("categoryName") String categoryName, Pageable pageable);
 
     //Search sản phẩm
-    @Query("FROM Product p WHERE p.productName LIKE CONCAT('%', :name, '%') OR p.color LIKE CONCAT('%', :name, '%') OR p.ram LIKE CONCAT('%', :name, '%')")
+    @Query("SELECT DISTINCT p FROM Product p " +
+            "LEFT JOIN p.productCategory c " +
+            "LEFT JOIN p.brand b " +
+            "WHERE (" +
+            "LOWER(p.productName) LIKE CONCAT('%', :name, '%') " +
+            "OR LOWER(p.color) LIKE CONCAT('%', :name, '%') " +
+            "OR LOWER(p.ram) LIKE CONCAT('%', :name, '%') " +
+            "OR LOWER(b.brandName) LIKE CONCAT('%', :name, '%') " +
+            "OR LOWER(c.categoryName) LIKE CONCAT('%', :name, '%'))")
     Page<Product> searchProducts(@Param("name") String name, Pageable pageable);
 
     // Đếm số lượng sản phẩm kết quả theo điều kiện tìm kiếm
