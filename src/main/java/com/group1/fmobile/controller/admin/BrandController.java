@@ -36,6 +36,7 @@ public class BrandController {
     @PostMapping("/brand/saveOrUpdate")
     public String saveOrUpdateBrand(@ModelAttribute("brand") @Valid Brand brand,
                                     BindingResult bindingResult) {
+
         // Kiểm tra xem tên thương hiệu đã tồn tại chưa
         Brand existingBrand = brandRepository.findByBrandName(brand.getBrandName());
 
@@ -43,6 +44,7 @@ public class BrandController {
         if (existingBrand != null && !existingBrand.getId().equals(brand.getId())) {
             bindingResult.rejectValue("brandName", "error.brandName",
                     "Brand name already exists!");
+            return "admin/brand/brand";
         }
 
         // Kiểm tra lỗi từ Validation
