@@ -547,6 +547,10 @@ header {
     height: 150px;
 }
 
+.detail p {
+    height: 40px;
+}
+
 .listProduct .item button {
     background-color: #353432;
     color: #eee;

@@ -34,7 +34,7 @@ const initApp = () => {
             if (cart.length > 0) {
                 proceedToCheckout();
             } else {
-                showNotification("Giỏ hàng của bạn đang trống!", "#FFA500");
+                showNotification("Your shopping cart is empty!", "#FFA500");
             }
         });
     }
@@ -107,19 +107,19 @@ const addToCart = (productId) => {
         let existingItem = cart.find(item => item.id == productId);
         if (existingItem) {
             existingItem.quantity += 1;
-            showNotification("Số lượng sản phẩm đã được cập nhật", "#4CAF50");
+            showNotification("Product quantity has been updated", "#4CAF50");
         } else {
             cart.push({
                 ...product,
                 quantity: 1
             });
-            showNotification("Sản phẩm đã được thêm vào giỏ hàng thành công", "#4CAF50");
+            showNotification("The product has been successfully added to the cart", "#4CAF50");
         }
         updateCartHTML();
         saveCartToSession();
     } else {
         console.error('Product not found:', productId);
-        showNotification("Không tìm thấy sản phẩm", "#FF0000");
+        showNotification("Product not found", "#FF0000");
     }
 }
 
