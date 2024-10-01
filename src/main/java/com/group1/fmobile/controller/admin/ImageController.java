@@ -70,15 +70,23 @@ public class ImageController {
         }
         // Kiểm tra xem file có được tải lên hay không
         if (imageData == null || imageData.isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng chọn hình ảnh!");
+            redirectAttributes.addFlashAttribute("FileNotFoundMessage", "Please select an image to upload!");
             return "redirect:/admin/image";
         }
+
+
+        if (image.getProduct() == null || image.getProduct().getId() == null) {
+            model.addAttribute("ProductMessage","Product must be selected.");
+            model.addAttribute("products", products);
+            return "admin/image/image"; // Return to the same view instead of redirecting
+        }
+
         try {
             // Kiểm tra định dạng file (chỉ chấp nhận PNG và JPEG)
             String contentType = imageData.getContentType();
             if (!contentType.equals("image/png") && !contentType.equals("image/jpeg")) {
-                redirectAttributes.addFlashAttribute("errorMessage",
-                        "Chỉ chấp nhận định dạng PNG hoặc JPEG!");
+                redirectAttributes.addFlashAttribute("FormatMessage",
+                        "Only PNG or JPEG formats are accepted!!");
                 return "redirect:/admin/image";
             }
 

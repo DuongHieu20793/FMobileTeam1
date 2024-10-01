@@ -109,8 +109,10 @@
                     <!-- Chọn Sản phẩm -->
                     <div class="form-group col-md-3">
                         <label for="product">Choose Product:</label>
-                        <select class="form-control" id="product" name="product.id" required>
+                        <select class="form-control" id="product" name="product.id">
+                            <!-- Default option with empty value -->
                             <option value="">-- Choose Product --</option>
+                            <!-- Loop through products to create options -->
                             <c:forEach var="product" items="${products}">
                                 <option value="${product.id}"
                                         <c:if test="${product.id == image.product.id}">selected</c:if>>
@@ -118,8 +120,14 @@
                                 </option>
                             </c:forEach>
                         </select>
-                        <div class="error-message" id="productError" style="color: red; display: none;"></div> <!-- Thông báo lỗi cho product -->
+                        <c:if test="${not empty ProductMessage}">
+                            <p style="color: red;">
+                                    ${ProductMessage}
+                            </p>
+                        </c:if>
+                        <div id="productError" style="color: red;"></div> <!-- Thông báo lỗi cho việc chọn sản phẩm -->
                     </div>
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="image_name">Image Name:</label>
@@ -130,8 +138,12 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="image_url">Choose Image:</label>
-                        <input type="file" class="form-control" id="image_url" name="image_url" required />
-                        <div class="error-message" id="imageUrlError" style="color: red; display: none;"></div> <!-- Thông báo lỗi cho image_url -->
+                        <input type="file" class="form-control" id="image_url" name="image_url" />
+                        <!-- Hiển thị thông báo lỗi khi sai định dạng hình ảnh -->
+                        <div class="error-message" style="color: red;">
+                            <c:if test="${not empty FileNotFoundMessage}">${FileNotFoundMessage}</c:if>
+                            <c:if test="${not empty FormatMessage}">${FormatMessage}</c:if>
+                        </div>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary" id="submit-button">
@@ -241,8 +253,6 @@
         <!-- Footer End -->
     </div>
 </div>
-<%--CDN Javascript--%>
-<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <!-- CDN jQuery Validation -->
@@ -273,64 +283,32 @@
 <script src="/js/admin.js"></script>
 
 <script>
-    document.getElementById("submit-button").onclick = function(event) {
-        // Lấy giá trị của imageName, product và image_url
-        var imageName = document.getElementById("image_name").value.trim();
-        var product = document.getElementById("product").value;
-        var imageUrl = document.getElementById("image_url").value;
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function(event) {
+            const productSelect = document.getElementById("product");
+            const errorMessageDiv = document.getElementById("productError");
 
-        // Reset thông báo lỗi
-        var imageNameErrorElement = document.getElementById("imageNameError");
-        var productErrorElement = document.getElementById("productError");
-        var imageUrlErrorElement = document.getElementById("imageUrlError");
+            // Xóa thông báo lỗi trước đó
+            if (errorMessageDiv) {
+                errorMessageDiv.textContent = '';
+            }
 
-        imageNameErrorElement.style.display = "none"; // Ẩn thông báo lỗi ban đầu
-        productErrorElement.style.display = "none";  // Ẩn thông báo lỗi ban đầu
-        imageUrlErrorElement.style.display = "none"; // Ẩn thông báo lỗi ban đầu
-
-        // Kiểm tra nếu imageName rỗng hoặc chỉ chứa khoảng trắng
-        if (!imageName) {
-            imageNameErrorElement.innerText = "Image Name cannot be empty!";
-            imageNameErrorElement.style.display = "block"; // Hiện thông báo lỗi
-            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
-            return;
-        }
-
-        // Kiểm tra độ dài của imageName
-        if (imageName.length > 255) {
-            imageNameErrorElement.innerText = "Image Name cannot exceed 255 characters!";
-            imageNameErrorElement.style.display = "block"; // Hiện thông báo lỗi
-            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
-            return;
-        }
-
-        // Kiểm tra ký tự đặc biệt trong imageName
-        var regex = /^[a-zA-Z0-9\s]+$/; // Chỉ cho phép chữ cái, số và khoảng trắng
-        if (!regex.test(imageName)) {
-            imageNameErrorElement.innerText = "Image Name can only contain letters, numbers, and spaces!";
-            imageNameErrorElement.style.display = "block"; // Hiện thông báo lỗi
-            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
-            return;
-        }
-
-        // Kiểm tra nếu product chưa được chọn
-        if (!product) {
-            productErrorElement.innerText = "Product is required!";
-            productErrorElement.style.display = "block"; // Hiện thông báo lỗi
-            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
-            return;
-        }
-
-        // Kiểm tra nếu ảnh chưa được chọn
-        if (!imageUrl) {
-            imageUrlErrorElement.innerText = "Image is required!";
-            imageUrlErrorElement.style.display = "block"; // Hiện thông báo lỗi
-            event.preventDefault(); // Ngăn chặn gửi biểu mẫu
-            return;
-        }
-        // Nếu tất cả kiểm tra đều hợp lệ, biểu mẫu sẽ được gửi
-    };
+            // Kiểm tra xem sản phẩm có được chọn không
+            if (!productSelect.value) {
+                event.preventDefault(); // Ngăn không cho form gửi
+                if (!errorMessageDiv) {
+                    const newErrorDiv = document.createElement("div");
+                    newErrorDiv.id = "productError";
+                    newErrorDiv.style.color = 'red';
+                    newErrorDiv.textContent = "Product must be selected.";
+                    productSelect.parentNode.appendChild(newErrorDiv);
+                }
+            }
+        });
+    });
 </script>
+
 
 </body>
 </html>

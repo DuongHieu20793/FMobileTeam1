@@ -67,6 +67,10 @@ public class AdminProductController {
         if (existingProduct != null && !existingProduct.getId().equals(product.getId())) {
             bindingResult.rejectValue("productName", "error.productName",
                     "Product name already exists!");
+            model.addAttribute("brands", brands);
+            model.addAttribute("categories", categories);
+            model.addAttribute("product", product);
+            return "admin/product/product";
         }
         if (bindingResult.hasErrors()) {
             // Truyền lại thông tin nếu form không hợp lệ
