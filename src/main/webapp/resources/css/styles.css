@@ -532,6 +532,7 @@ header {
     margin-top: 30px;
     font-weight: 500;
     font-size: large;
+    height: 50px;
 }
 
 .listProduct .item .price {
@@ -543,6 +544,7 @@ header {
 
 .listProduct .item .detail {
     font-size: 1.5rem;
+    height: 150px;
 }
 
 .listProduct .item button {

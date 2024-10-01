@@ -490,7 +490,7 @@
 <header class="py-4 mb-5">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-            <a href="/" class="home-link">
+            <a href="/client/homepage" class="home-link">
                 <i class="fas fa-home"></i>
                 <h1>FMOBILE</h1>
             </a>

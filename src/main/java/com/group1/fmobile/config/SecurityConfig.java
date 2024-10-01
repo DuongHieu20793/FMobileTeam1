@@ -245,7 +245,7 @@ public class SecurityConfig {
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
                                 .requestMatchers("/", "/login", "/register",  "/css/**", "/favicon.ico","/js/**", "/images/**", "/verify",
                                         "/reset-password", "/forgotpassword","/home","/guest/**","/checkout/**","/checkout-not-login","/client/homepage", "/checkout", "/single-product", "/checkout/single-product",
-                                        "/checkout/single-product/**", "client/checkout").permitAll()
+                                        "/checkout/single-product/**", "client/checkout","/resend-otp").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
