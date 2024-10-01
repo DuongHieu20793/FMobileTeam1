@@ -41,8 +41,11 @@ public class CategoryController {
 
         // Nếu tên danh mục đã tồn tại và không phải là danh mục đang được chỉnh sửa
         if (existingCategory != null && !existingCategory.getId().equals(category.getId())) {
+            List<ProductCategory> list = categoryService.getAll();
+            model.addAttribute("categories", list);
             bindingResult.rejectValue("categoryName", "error.categoryName",
                     "Category name already exists!");
+            return "admin/category/category";
         }
         // Kiểm tra lỗi từ Validation
         if (bindingResult.hasErrors()) {
