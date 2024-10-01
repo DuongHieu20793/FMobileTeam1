@@ -102,3 +102,22 @@
 
 
 <jsp:include page="guestFooter.jsp"/>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderSuccess = urlParams.get('orderSuccess');
+
+        if (orderSuccess === 'true') {
+            Swal.fire({
+                title: 'Order Placed Successfully!',
+                text: 'Thank you for your purchase.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                // Xóa tham số orderSuccess khỏi URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            });
+        }
+    });
+</script>
